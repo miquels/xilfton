@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- the background here is the splash screen when the app initializes. -->
+<!-- android:background="@drawable/notflix_xxxhdpi" -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#2980B9">
+    android:layout_height="match_parent">
+
 
     <WebView
         android:id="@+id/main_webview"

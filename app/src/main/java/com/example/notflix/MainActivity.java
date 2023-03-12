@@ -67,9 +67,10 @@ public class MainActivity extends Activity {
             if (error.getPrimaryError() == SslError.SSL_UNTRUSTED) {
                 Log.d("MainActivity", "Untrusted SSL cert - accepting anyway");
                 handler.proceed();
+            } else {
+                Log.d("MainActivity", "SSL error, rejecting: " + error.getPrimaryError());
+                handler.cancel();
             }
-            proceed();
         }
-        private void proceed() {}
     }
 }
