@@ -1,6 +1,7 @@
 <resources>
     <style name="Theme.Notflix" parent="@style/Theme.Leanback">
         <!-- main background color. used from first boot -->
+        <!-- item name="android:windowBackground">@color/background</item -->
         <item name="android:windowBackground">@color/background</item>
     </style>
 </resources>
