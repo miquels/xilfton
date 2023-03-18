@@ -36,6 +36,7 @@ public class MainActivity extends Activity {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setUseWideViewPort(true);
         webSettings.setAppCacheEnabled(true);
+        webSettings.setDomStorageEnabled(true);
 
         webView.loadUrl("https://192.168.178.24:8080/");
     }
