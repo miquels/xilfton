@@ -6,7 +6,7 @@ android {
     compileSdkVersion 31
 
     defaultConfig {
-        applicationId "com.example.notflix"
+        applicationId "nl.z42.notflix"
         minSdkVersion 29
         targetSdkVersion 31
         versionCode 1
@@ -20,7 +20,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    namespace 'com.example.notflix'
+    namespace 'nl.z42.notflix'
 }
 
 dependencies {

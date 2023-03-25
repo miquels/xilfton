@@ -1,4 +1,4 @@
-package com.example.notflix;
+package nl.z42.notflix;
 
 import android.app.Activity;
 import android.graphics.Color;

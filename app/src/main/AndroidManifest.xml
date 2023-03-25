@@ -8,7 +8,7 @@
 
     <uses-feature
         android:name="android.software.leanback"
-        android:required="false" />
+        android:required="true" />
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
@@ -23,7 +23,7 @@
         android:theme="@style/Theme.Notflix">
 
         <activity
-            android:name="com.example.notflix.MainActivity"
+            android:name="nl.z42.notflix.MainActivity"
             android:banner="@mipmap/notflix"
             android:icon="@mipmap/notflix"
             android:logo="@mipmap/notflix"
