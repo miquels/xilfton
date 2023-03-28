@@ -1,0 +1,12 @@
+// We set 'position: relative' to cater For 'position: absolute' fullscreen
+// divs that are a direct child element of <body>.
+body {
+  position: relative;
+  color: white;
+  background-color: #000;
+}
+
+.focus-white:focus {
+  color: #ffffff;
+  outline: none;
+}
