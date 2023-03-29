@@ -2,16 +2,21 @@
   <lrud>
   <div>
 
+    <div class="row q-pa-xl" />
     <div class="row justify-center">
-      <div class="col text-h4 q-pa-xl text-center">NOTFLIX server selection</div>
+      <div class="col-3" />
+      <div class="col-6 text-h4 text-center">NOTFLIX server selection</div>
+      <q-item class="col-2" />
+      <q-item class="col-1">
+        <q-btn round color="primary" icon="settings" :to="{ name: 'settings' }" />
+      </q-item>
     </div>
 
     <div class="row justify-center">
-      <q-card dark bordered class="col-6 q-ma-md bg-grey-10 my-card">
-        <q-list bordered padding class="rounded-borders text-primary">
-          <template v-for="(server, index) in servers" :key="index">
-            <q-separator v-if="index > 0" dark/>
-            <q-item
+      <div class="col-6 q-ma-md">
+        <template v-for="(server, index) in store.state.servers" :key="index">
+          <q-item>
+            <q-btn
               clickable
               v-ripple
               dark
@@ -19,12 +24,14 @@
               class="my-menu-link"
               :data-server="index"
               tabindex="0"
-            >
-              <q-item-section class="text-center">{{ server }}</q-item-section>
-            </q-item>
-          </template>
-        </q-list>
-      </q-card>
+              :label="server.hostname"
+              color="primary"
+              rounded
+              style="width: 100%"
+            />
+          </q-item>
+        </template>
+      </div>
     </div>
 
   </div>
@@ -36,21 +43,20 @@
 .my-card {
   min-width: 250px;
   font: roboto;
-  font-size: 1.3em;
-}
-.my-menu-link:focus {
-  background-color: white;
-  color: black;
+  font-size: 1.4em;
 }
 </style>
 
 <script setup>
+import { useQuasar } from 'quasar';
 import {
   onMounted,
   ref,
 } from 'vue';
+import { useStore } from '../store/index.js';
 
-const servers = ['nf.high5.nl', '192.168.178.24:8080', 'notflix.z42.nl'];
+const store = useStore();
+const $q = useQuasar();
 const currentServer = ref(0);
 
 function focus() {
@@ -58,15 +64,17 @@ function focus() {
   if (!elem) {
     elem = document.querySelector('[data-server]');
   }
-  // eslint-disable-next-line
-  console.log('refocus ', elem);
   elem.focus();
 }
 
 function selectedServer(index) {
-  const isTv = navigator.userAgent.match(/Android/) && !('ontouchstart' in window);
-  const url = `https://${servers[index]}`;
-  if (isTv) {
+  const server = store.state.servers[index];
+  const proto = server.ssl ? 'https' : 'http';
+  const url = `${proto}://${server.hostname}/`;
+  if (window.androidApp) {
+    window.androidApp.setDevelEnabledOnce(server.debug);
+  }
+  if ($q.platform.is.tv) {
     window.location.replace(url);
   } else {
     window.location.href = url;

@@ -1,10 +1,20 @@
+// When run from android filesystem.
+const baseUrl = '';
+/*
+if (window.location.href.startsWith('file:///android_asset/ui/')) {
+  baseUrl = 'file:///android_asset/ui';
+}
+*/
+
 const routes = [
   {
-    path: '/',
+    name: 'index',
+    path: `${baseUrl}/`,
     component: () => import('pages/IndexPage.vue'),
   },
   {
-    path: '/settings',
+    name: 'settings',
+    path: `${baseUrl}/settings`,
     component: () => import('pages/SettingsPage.vue'),
   },
 

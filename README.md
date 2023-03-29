@@ -3,17 +3,21 @@
 This is an Android Webview app for the Xilfton media streamer PWA.
 It just loads the Xilfton webinterface like a browser would.
 
+## Configuration.
+
+The app has a builtin 'bootmenu' like chooser to choose between
+different PWA servers. If no default has been set yet, the menu
+will be shown - otherwise the default entry will be loaded.
+
+To get to the menu from the Xilfton app, press the "back" button
+six times in rapid succession (within one second).
+
+## BUILDING
+
+- First run "quasar build" in the ui/ directory
+- Then in Android Studio run the app, or build an APK
+
 ## TODO
-
-### Implement URL chooser.
-
-The first page should be local, and ask the user to enter the URL
-for their xilfton instance. It should have a 'enable dev options' checkbox,
-which would allow self-signed certs when accessing 192.168.0.0/16 or localhost.
-
-Pressing the 'back' button 6 times in rapid succession should unload
-force the app to reload the initial page, so that the settings can
-be changed, or in the case that the xilfton PWA is not responsive.
 
 ### 5.1 Surround Sound.
 
