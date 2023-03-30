@@ -1,6 +1,6 @@
 <template>
   <lrud>
-  <div>
+  <div class="index-page">
 
     <div class="row q-pa-xl" />
     <div class="row justify-center">
@@ -8,7 +8,11 @@
       <div class="col-6 text-h4 text-center">NOTFLIX server selection</div>
       <q-item class="col-2" />
       <q-item class="col-1">
-        <q-btn round color="primary" icon="settings" :to="{ name: 'settings' }" />
+        <q-btn
+          round
+          color="primary"
+          icon="settings"
+          @click="router.replace({ name: 'settings' })" />
       </q-item>
     </div>
 
@@ -34,21 +38,34 @@
       </div>
     </div>
 
+    <div class="row index-bottom">
+      <div class="col text-center">
+        You can always get back to this menu by pressing the back button 6 times quickly.
+      </div>
+    </div>
+
   </div>
   </lrud>
 </template>
 
 <style lang="scss">
 @import '../css/app.scss';
-.my-card {
-  min-width: 250px;
-  font: roboto;
-  font-size: 1.4em;
+.index-page {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.index-bottom {
+  position: absolute;
+  left: 0px;
+  bottom: 40px;
+  right: 0px;
 }
 </style>
 
 <script setup>
 import { useQuasar } from 'quasar';
+import { useRouter } from 'vue-router';
 import {
   onMounted,
   ref,
@@ -57,6 +74,7 @@ import { useStore } from '../store/index.js';
 
 const store = useStore();
 const $q = useQuasar();
+const router = useRouter();
 const currentServer = ref(0);
 
 function focus() {

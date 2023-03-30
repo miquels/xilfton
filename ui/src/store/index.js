@@ -12,23 +12,42 @@ const defaultState = () => ({
   advanced: false,
 });
 
-let backingState;
+const backingState = {};
+const state = reactive(backingState);
+let initialized = false;
+
+function clearState() {
+  // eslint-disable-next-line
+  for (let key of Object.keys(state)) {
+    delete state[key];
+  }
+}
+
+function loadState() {
+  let data = localStorage.getItem('settings');
+  if (data) {
+    data = JSON.parse(data);
+  } else {
+    data = defaultState();
+  }
+  Object.assign(state, data);
+}
 
 const store = {
-  save() {
+  state,
+  commit() {
     localStorage.setItem('settings', JSON.stringify(backingState));
+  },
+  rollback() {
+    clearState();
+    loadState();
   },
 };
 
 export function useStore() {
-  if (!backingState) {
-    const state = localStorage.getItem('settings');
-    if (state) {
-      backingState = JSON.parse(state);
-    } else {
-      backingState = defaultState();
-    }
-    store.state = reactive(backingState);
+  if (!initialized) {
+    loadState();
+    initialized = true;
   }
   return store;
 }

@@ -1,6 +1,10 @@
 <template>
   <lrud>
-  <div @focusout="focus()" ref="el">
+  <div
+    @focusout="focus()"
+    @keyup.esc="cancel()"
+    ref="el"
+  >
 
     <div class="row justify-center">
       <div class="col text-h4 q-pa-xl text-center">NOTFLIX server configuration</div>
@@ -70,8 +74,8 @@
       </div>
     </template>
 
+    <lrud>
     <div class="row justify-center align-center q-pa-sm">
-      <lrud keys="">
       <q-item class="col-1">
         <q-btn
           v-if="store.state.servers.length < 6"
@@ -82,13 +86,12 @@
           rounded
         />
       </q-item>
-      </lrud>
       <q-item class="col-2">
         <q-btn
           tabindex="0"
           class="submit-focus-helper"
           label="Submit"
-          :to="{ name: 'index' }"
+          @click="submit()"
          />
       </q-item>
       <q-item class="col-3" />
@@ -102,6 +105,7 @@
         />
       </q-item>
     </div>
+    </lrud>
 
   </div>
   </lrud>
@@ -134,16 +138,30 @@
 <script setup>
 import {
   nextTick,
-  onUnmounted,
   onMounted,
   ref,
 } from 'vue';
+import { useRouter } from 'vue-router';
 import QTvInput from 'components/QTvInput.vue';
 import { useStore } from '../store/index.js';
 
 const store = useStore();
+const router = useRouter();
 const currentServer = ref(0);
 const el = ref(null);
+
+function focus(force) {
+  nextTick(() => {
+    if (el.value && (force || !el.value.querySelector(':scope *:focus'))) {
+      let elem = document.querySelector(`[data-server="${currentServer.value}"]`);
+      if (!elem) {
+        elem = document.querySelector('[data-server]');
+      }
+      // console.log('refocus on', elem);
+      elem.focus();
+    }
+  });
+}
 
 function setDefault(server) {
   if (server.isDefault) {
@@ -167,25 +185,15 @@ function addServer() {
     debug: false,
     isDefault: store.state.servers.length === 0,
   });
+  currentServer.value = store.state.servers.length - 1;
+  focus(true);
 }
 
-function focus() {
-  nextTick(() => {
-    if (el.value && !el.value.querySelector(':scope *:focus')) {
-      // console.log('refocus!');
-      let elem = document.querySelector(`[data-server="${currentServer.value}"]`);
-      if (!elem) {
-        elem = document.querySelector('[data-server]');
-      }
-      elem.focus();
-    }
-  });
-}
 onMounted(() => {
   focus();
 });
 
-onUnmounted(() => {
+function submit() {
   // Remove empty slots before saving.
   let i = 0;
   while (i < store.state.servers.length) {
@@ -195,7 +203,7 @@ onUnmounted(() => {
       i += 1;
     }
   }
-  store.save();
+  store.commit();
 
   // If we have the androidApp interface, update the default server.
   if (window.androidApp) {
@@ -210,5 +218,12 @@ onUnmounted(() => {
       window.androidApp.setDevelEnabled(false);
     }
   }
-});
+
+  router.replace({ name: 'index' });
+}
+
+function cancel() {
+  store.rollback();
+  router.replace({ name: 'index' });
+}
 </script>
