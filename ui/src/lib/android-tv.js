@@ -11,8 +11,9 @@ import { useQuasar } from 'quasar';
 // is not yet available.
 export function fixQuasarPlatform() {
   const quasar = useQuasar();
+  const hasTouch = ('ontouchstart' in window) && navigator.maxTouchPoints > 0;
   if (quasar.platform.userAgent.match(/AOSP TV|Chromecast|Android TV/)
-      || (quasar.platform.is.android && !quasar.platform.has.touch)) {
+      || (quasar.platform.is.android && !hasTouch)) {
     // eslint-disable-next-line
     console.log('Android TV detected, patching quasar.platform');
     quasar.platform.has.touch = false;

@@ -15,30 +15,36 @@
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
-        android:largeHeap="true"
         android:icon="@mipmap/notflix"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.Notflix">
 
-        <meta-data android:name="android.webkit.WebView.MetricsOptOut" android:value="true" />
-        <meta-data android:name="android.webkit.WebView.EnableSafeBrowsing" android:value="false" />
+        <meta-data
+            android:name="android.webkit.WebView.MetricsOptOut"
+            android:value="true" />
+        <meta-data
+            android:name="android.webkit.WebView.EnableSafeBrowsing"
+            android:value="false" />
 
         <activity
-            android:name="nl.z42.notflix.MainActivity"
+            android:name=".MainActivity"
             android:banner="@mipmap/notflix"
+            android:exported="true"
             android:icon="@mipmap/notflix"
+            android:launchMode="singleTask"
             android:logo="@mipmap/notflix"
             android:screenOrientation="landscape"
-            android:launchMode="singleTask"
-            android:exported="true"
             tools:ignore="WrongManifestParent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>

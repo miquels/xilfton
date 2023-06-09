@@ -1,6 +1,6 @@
 <template>
   <lrud>
-  <div class="index-page">
+  <div class="index-page" @keydown="onKeyDown($event)">
 
     <div class="row q-pa-xl" />
     <div class="row justify-center">
@@ -32,6 +32,7 @@
               color="primary"
               rounded
               style="width: 100%"
+              v-autofocus="{vIf: index === 0}"
             />
           </q-item>
         </template>
@@ -40,7 +41,7 @@
 
     <div class="row index-bottom">
       <div class="col text-center">
-        You can always get back to this menu by pressing the back button 6 times quickly.
+        You can always get back to this menu by pressing the back button 7 times quickly.
       </div>
     </div>
 
@@ -76,6 +77,7 @@ const store = useStore();
 const $q = useQuasar();
 const router = useRouter();
 const currentServer = ref(0);
+const bootTime = Date.now();
 
 function focus() {
   let elem = document.querySelector(`[data-server="${currentServer.value}"]`);
@@ -99,8 +101,16 @@ function selectedServer(index) {
   }
 }
 
+function onKeyDown(ev) {
+  if (ev.key === 'Escape' && window.androidApp) {
+    const now = Date.now();
+    if (now > bootTime + 2000) {
+      window.androidApp.exitApplication();
+    }
+  }
+}
+
 onMounted(() => {
   focus();
 });
-
 </script>
